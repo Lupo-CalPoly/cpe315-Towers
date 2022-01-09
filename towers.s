@@ -1,17 +1,18 @@
-	.arch armv6
-	.fpu vfp
+	.arch armv8-a
 	.text
 
 @ print function is complete, no modifications needed
     .global	print
 print:
-	stmfd	sp!, {r3, lr}
-	mov	r3, r0
-	mov	r2, r1
-	ldr	r0, startstring
-	mov	r1, r3
-	bl	printf
-	ldmfd	sp!, {r3, pc}
+      stp    x29, x30, [sp, -16]! //Store FP, LR.
+      add    x29, sp, 0
+      mov    x3, x0
+      mov    x2, x1
+      ldr    w0, startstring
+      mov    x1, x3
+      bl     printf
+      ldp    x29, x30, [sp], 16
+      ret
 
 startstring:
 	.word	string0
@@ -20,7 +21,7 @@ startstring:
 towers:
    /* Save calllee-saved registers to stack */
    
-   /* Save a copy of all 3 incoming parameters */
+   /* Save a copy of all 3 incoming parameters to callee-saved registers */
 
 if:
    /* Compare numDisks with 2 or (numDisks - 2)*/
@@ -55,30 +56,31 @@ else:
 
 endif:
    /* Restore Registers */
+   /* Return from towers function */
 
 @ Function main is complete, no modifications needed
     .global	main
 main:
-	str	lr, [sp, #-4]!
-	sub	sp, sp, #20
-	ldr	r0, printdata
-	bl	printf
-	ldr	r0, printdata+4
-	add	r1, sp, #12
-	bl	scanf
-	ldr	r0, [sp, #12]
-	mov	r1, #1
-	mov	r2, #3
-	bl	towers
-	str	r0, [sp]
-	ldr	r0, printdata+8
-	ldr	r1, [sp, #12]
-	mov	r2, #1
-	mov	r3, #3
-	bl	printf
-	mov	r0, #0
-	add	sp, sp, #20
-	ldr	pc, [sp], #4
+      stp    x29, x30, [sp, -32]!
+      add    x29, sp, 0
+      ldr    w0, printdata 
+      bl     printf
+      ldr    w0, printdata + 4
+      add    x1, x29, 28
+      bl     scanf
+      ldr    w0, [x29, 28] /* numDisks */
+      mov    x1, #1 /* Start */
+      mov    x2, #3 /* Goal */
+      bl     towers
+      mov    w4, w0
+      ldr    w0, printdata + 8
+      ldr    w1, [x29, 28]
+      mov    w2, #1
+      mov    w3, #3
+      bl     printf
+      mov    x0, #0
+      ldp    x29, x30, [sp], 16
+      ret
 end:
 
 printdata:
