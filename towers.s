@@ -18,6 +18,11 @@ startstring:
 	.word	string0
 
     .global	towers
+   /* Include a register usage plan in this comment before the function
+    *   ** or ** give each register a meaningful alias using the syntax:
+    * arg0 .req x0
+    */
+
 towers:
    /* Save calllee-saved registers to stack */
    
