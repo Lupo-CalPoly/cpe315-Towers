@@ -28,7 +28,7 @@ towers:
    
    /* Save a copy of all 3 incoming parameters to callee-saved registers */
 
-if:
+.lif:
    /* Compare numDisks with 2 or (numDisks - 2)*/
    /* Check if less than, else branch to else */
    
@@ -37,7 +37,7 @@ if:
    /* call print function */
    /* Set return register to 1 */
    /* branch to endif */
-else:
+.lelse:
    /* Use a callee-saved varable for temp and set it to 6 */
    /* Subract start from temp and store to itself */
    /* Subtract goal from temp and store to itself (temp = 6 - start - goal)*/
@@ -59,7 +59,7 @@ else:
    /* Call towers function */
    /* Add result to total steps so far and save it to return register */
 
-endif:
+.lendif:
    /* Restore Registers */
    /* Return from towers function */
 
@@ -84,7 +84,7 @@ main:
       mov    w3, #3
       bl     printf
       mov    x0, #0
-      ldp    x29, x30, [sp], 16
+      ldp    x29, x30, [sp], 32
       ret
 end:
 

@@ -5,7 +5,6 @@
 /* Print a move. */
 void print(int from, int to)
 {
-//    cout << "Move from peg " << from << " to peg " << to << endl;
     printf("Move from peg %d to peg %d\n", from, to);
 }
 
@@ -34,8 +33,6 @@ int main()
 {
     int numDiscs, start, goal, steps;
 
-//    cout << "Enter the number of disks to be moved: ";
-//    cin >> numDiscs;
     printf("Enter number of discs to be moved: ");
     scanf(" %d", &numDiscs);
 
@@ -44,9 +41,6 @@ int main()
 
     steps = towers(numDiscs, start, goal);
 
-//    cout << endl << numDiscs << " discs moved from peg "
-//         << start << " to peg " << goal << " in "
-//         << steps << " steps." << endl;
     printf("\n%d discs moved from peg %d to peg %d in %d steps.\n",
         numDiscs, start, goal, steps);
 
